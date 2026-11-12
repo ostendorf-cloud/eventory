@@ -27,6 +27,8 @@ Inventory and rental management for event technology, with a customer-facing ren
 - A customer can assemble a request from the rentable stock and receive a quotation.
 - A confirmed job produces an offer or invoice in the accounting system without retyping.
 - Different people hold different rights: warehouse, office, read-only, owner.
+- A tenant with an accounting system connected reads its customers from there; one without it
+  keeps customers in Eventory.
 - Inspection and service due dates are visible before the gear is committed to a job.
 - A second tenant can be added without a data migration.
 
@@ -37,6 +39,9 @@ Inventory and rental management for event technology, with a customer-facing ren
 - Being a CRM. Customers exist as counterparties, not as a sales pipeline.
 - Accounting. Eventory produces documents through a port; solobill owns the ledger.
 - A native mobile application in the first version.
+- Rental pricing beyond a day rate per product. Week rates, scaling and package prices wait.
+- Subhire from other providers. Named so the movement model does not block it, not built.
+- A bulk import tool. Around two hundred assets is an afternoon of typing, not a feature.
 - Barcode label printing hardware integration beyond producing printable sheets.
 
 ## Approach
@@ -67,6 +72,9 @@ Inventory and rental management for event technology, with a customer-facing ren
   own domain reach the same handler.
 - Accounting is a port with one adapter for solobill. The port speaks documents and customers, not
   solobill's schema, so a second adapter is a package and not a refactor.
+- Customers are read through that port when one is connected, and solobill is then the source of
+  truth. With no accounting system connected, a local customer store behind the same interface
+  serves them, so the rest of the application never knows which case it is in.
 - Authorisation is role-based with the permission checked in the service layer, not the handler,
   so the API, the shop and any later client share one answer.
 - Every table carries `tenant_id` with Postgres row-level security beneath the application.
@@ -88,14 +96,10 @@ Inventory and rental management for event technology, with a customer-facing ren
 
 ## Open questions
 
-- Roughly how many products, assets and containers exist, which decides how much the first import
-  matters and whether a bulk import tool is part of the first release.
-- Whether rental pricing needs day-scaling, week rates and package prices in the first version, or
-  a flat day rate per product.
-- Whether subhire from other providers must be tracked as stock that is not owned.
 - Which inspection regimes actually apply, and whether due dates block a commitment or only warn.
 - Whether the shop asks for a customer account or only an email address.
-- Whether solobill's customer records are the source of truth, with Eventory holding a reference,
-  or both hold customers and reconcile.
 - What the first release must do when the accounting system is unreachable at the moment a job is
   confirmed.
+- Whether a shop visitor who is already a solobill customer is recognised, and on what.
+- How a day rate is applied to a multi-day job: every day charged, or a convention of the trade
+  that the first release should follow.
