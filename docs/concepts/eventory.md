@@ -25,7 +25,11 @@ Inventory and rental management for event technology, with a customer-facing ren
 - Checking out and checking in works one-handed on a phone and on an iPad, including in a cellar
   with no signal, syncing when the connection returns.
 - A customer can assemble a request from the rentable stock and receive a quotation.
-- A confirmed job produces an offer or invoice in the accounting system without retyping.
+- A quotation is calculated from the day rate and the chargeable days of the job.
+- A discount can be given per line and on the whole job, as a percentage or an amount, and the
+  reason is recorded with it.
+- A confirmed job produces an offer or invoice in the accounting system without retyping,
+  carrying the discounts as given rather than as an already-reduced price.
 - Different people hold different rights: warehouse, office, read-only, owner.
 - A tenant with an accounting system connected reads its customers from there; one without it
   keeps customers in Eventory.
@@ -39,7 +43,8 @@ Inventory and rental management for event technology, with a customer-facing ren
 - Being a CRM. Customers exist as counterparties, not as a sales pipeline.
 - Accounting. Eventory produces documents through a port; solobill owns the ledger.
 - A native mobile application in the first version.
-- Rental pricing beyond a day rate per product. Week rates, scaling and package prices wait.
+- Automatic rental pricing beyond a day rate per chargeable day. Week rates, scaling and package
+  prices wait; a discount covers the cases they would have handled.
 - Subhire from other providers. Named so the movement model does not block it, not built.
 - A bulk import tool. Around two hundred assets is an afternoon of typing, not a feature.
 - Barcode label printing hardware integration beyond producing printable sheets.
